@@ -1,0 +1,21 @@
+{
+  "name": "@ufl/chomp",
+  "version": "1.0.0",
+  "description": "Content and Help Output Multiplexer Program",
+  "main": "index.js",
+  "bin": {
+    "chomp": "./index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Steven Hunt",
+  "license": "Unlicensed",
+  "dependencies": {
+    "fs-extra": "^10.0.0",
+    "lodash": "^4.17.21",
+    "mammoth": "^1.4.19",
+    "marked": "^4.0.12",
+    "parse5": "^6.0.1"
+  }
+}
