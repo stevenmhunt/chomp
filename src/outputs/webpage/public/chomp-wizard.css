@@ -1,0 +1,26 @@
+@keyframes chomp-wizard-fadein {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+
+.chomp-wizard {
+    text-align: center;
+}
+
+.chomp-wizard .chomp-wizard-item {
+    animation: chomp-wizard-fadein 1s;
+}
+
+.chomp-wizard .chomp-wizard-footer {
+    overflow: hidden;
+    position: relative;
+    padding: 10px;
+}
+
+.chomp-wizard .chomp-wizard-back {
+    float: left;    
+}
+
+.chomp-wizard .chomp-wizard-next {
+    float: right;
+}

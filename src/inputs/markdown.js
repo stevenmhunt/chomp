@@ -1,5 +1,6 @@
 const fs = require('fs-extra');
 const { marked } = require('marked');
+const htmlParser = require('../parsers/html');
 
 module.exports = async function markdownInputProcessor({ filepath, content }) {
     if (!content && filepath) {
@@ -10,5 +11,5 @@ module.exports = async function markdownInputProcessor({ filepath, content }) {
         smartLists: true,
         smartypants: true,
     });
-    return result;
+    return htmlParser(result);
 };

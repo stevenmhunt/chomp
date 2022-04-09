@@ -1,7 +1,19 @@
 const _ = require('lodash');
+const path = require('path');
 const inputs = require('./inputs');
 const outputs = require('./outputs');
-const htmlParser = require('./parsers/html');
+const { getBuildContext } = require('./buildContext');
+const logging = require('./logging');
+
+function getItems(obj) {
+    if (!obj || !obj.items) {
+        return [];
+    }
+    if (!_.isArray(obj.items)) {
+        return [obj.items];
+    }
+    return obj.items;
+}
 
 function getObjectType(obj) {
     if (obj.output) { return 'output'; }
@@ -9,23 +21,46 @@ function getObjectType(obj) {
     return 'unknown';
 }
 
-async function executeBuildInternal(type, obj) {
-    if (getObjectType(obj) === 'output') {
-        const items = await Promise.all(obj.items.map(i => executeBuildInternal(type, i)));
-        return outputs[type][obj.output]({
+async function executeBuildInternal(key, type, obj) {
+    const objectType = getObjectType(obj);
+    if (objectType === 'output') {
+        const output = _.camelCase(obj.output);
+        if (!_.isFunction(outputs[type][output])) {
+            throw new Error(`Invalid output type ${obj.output}.`);
+        }
+
+        const items = await Promise.all(getItems(obj).map(i => executeBuildInternal(key, type, i)));
+        return outputs[type][output]({
             ...obj,
+            key,
             items,
         });
-    } else {
-        return htmlParser(await inputs[obj.input](obj));
+    }
+    else if (objectType === 'input') {
+        const input = _.camelCase(obj.input);
+        if (!_.isFunction(inputs[input])) {
+            throw new Error(`Invalid input type ${obj.input}.`);
+        }
+        return await inputs[obj.input](obj);
+    }
+    else {
+        console.log(obj);
+        throw new Error('Unknown object type!');
     }
 }
 
-async function executeBuild(chompfile) {
-    const { name } = chompfile;
-    return (await Promise.all(_.keys(chompfile)
-        .filter(i => i !== 'name')
-        .map(i => executeBuildInternal(i, chompfile[i])))).join('');
+async function executeBuild(cwd, chompfile) {
+    logging.log('---------------------------------------------------');
+    logging.log('Content and Help Output Multiplexer Program (CHOMP)')
+    logging.log('---------------------------------------------------');
+    const { name, types, items } = chompfile;
+    for (let i = 0; i < types.length; i += 1) {
+        const type = types[i];
+        const key = `${name}:${type}`;
+        logging.log(`Building ${name} (${type})...`);
+        await Promise.all(items.map(i => executeBuildInternal(key, type, i)));
+        await getBuildContext(key).finalize(path.join(cwd, type));
+    }
 };
 
 module.exports = {

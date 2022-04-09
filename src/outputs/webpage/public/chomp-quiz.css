@@ -1,0 +1,26 @@
+@keyframes chomp-quiz-fadein {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+
+.chomp-quiz {
+    text-align: center;
+}
+
+.chomp-quiz .chomp-quiz-item {
+    animation: chomp-quiz-fadein 1s;
+}
+
+.chomp-quiz .chomp-quiz-footer {
+    overflow: hidden;
+    position: relative;
+    padding: 10px;
+}
+
+.chomp-quiz .chomp-quiz-back {
+    float: left;    
+}
+
+.chomp-quiz .chomp-quiz-next {
+    float: right;
+}

@@ -1,9 +1,13 @@
-const main = require('./main');
-const modules = require('./modules');
+const page = require('./page');
+const section = require('./section');
+const link = require('./link');
+const inlineSection = require('./inline-section');
 const wizard = require('./wizard');
 
 module.exports = {
-    main,
-    modules,
+    page,
+    section,
+    link,
+    inlineSection,
     wizard,
 };
