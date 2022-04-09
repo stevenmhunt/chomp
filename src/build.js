@@ -29,7 +29,7 @@ async function executeBuildInternal(key, type, obj) {
             throw new Error(`Invalid output type ${obj.output}.`);
         }
 
-        const items = await Promise.all(getItems(obj).map(i => executeBuildInternal(key, type, i)));
+        const items = _.flatten(await Promise.all(getItems(obj).map(i => executeBuildInternal(key, type, i))));
         return outputs[type][output]({
             ...obj,
             key,

@@ -1,3 +1,5 @@
+const fs = require('fs-extra');
+
 /**
  * Converts an JSON file into a data object.
  * @param {string} filepath The path to the JSON file.

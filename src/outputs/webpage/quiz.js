@@ -13,7 +13,7 @@ module.exports = async function webpageQuizOutput({ items, header, footer, key }
 
     // render output:
     const quizTag = 'div class="chomp-quiz-item" style="display: none;"';
-    const htmlItems = await renderHtmlItems(items, quizTag);
+    const htmlItems = `<pre>${JSON.stringify(items, null, 4)}</pre>`;
     const innerHtml = wrapHeaderFooter({ header, footer }, `
     <div class="chomp-quiz col">
         ${htmlItems}
