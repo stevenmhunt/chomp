@@ -21,9 +21,8 @@ footer {
     padding-bottom: 20px;
 }
 
-section > div {
+section > * {
     padding: 10px;
-    border-bottom: 1px solid #aaaaaa;
 }
 
 h1, h2, h3, h4 {

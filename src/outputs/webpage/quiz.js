@@ -16,7 +16,7 @@ module.exports = async function webpageQuizOutput({ items, header, footer, key }
 
     // render output:
     function getAnswerListHtml(item) {
-        return _.keys(item).filter(i => i.startsWith('answer') && i !== 'answer').map(k => `
+        return _.keys(item).filter(i => i.startsWith('answer') && i !== 'answer' && item[i]).map(k => `
         <div class="chomp-quiz-answer" data-answer="${k}">${item[k]}</div>
         `).join('');
     }

@@ -1,13 +1,13 @@
 const htmlFormatter = require('../../formatters/html');
 
-function wrapHeaderFooter({ header, footer, tag }, content) {
+function wrapHeaderFooter({ header, footer, headerTag, footerTag }, content) {
     let headerHtml = "";
     if (header) {
-        headerHtml = `<${tag || 'h1'}>${header}</${tag || 'h1'}>`;
+        headerHtml = `<${headerTag || 'h1'}>${header}</${headerTag || 'h1'}>`;
     }
     let footerHtml = "";
     if (footer) {
-        footerHtml = `<${tag || 'h1'}>${footer}</${tag || 'h1'}>`;
+        footerHtml = `<${footerTag || 'h1'}>${footer}</${footerTag || 'h1'}>`;
     }
 
     return `${headerHtml}${content}${footerHtml}`;

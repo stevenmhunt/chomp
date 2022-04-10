@@ -2,11 +2,11 @@ const { getBuildContext } = require('../../buildContext');
 const { renderHtmlItems, wrapHeaderFooter } = require('./helpers');
 const htmlPretty = require('pretty');
 
-module.exports = async function webpagePageOutput({ items, href, title, footer, pretty, key }) {
+module.exports = async function webpagePageOutput({ items, href, title, header, footer, pretty, key }) {
     const context = getBuildContext(key);
     const innerHtml = await renderHtmlItems(items);
     const outerHtml = `<div id="content">${innerHtml}</div>`;
-    const htmlItems = wrapHeaderFooter({ footer, tag: 'footer' }, outerHtml);
+    const htmlItems = wrapHeaderFooter({ header, headerTag: 'header', footer, footerTag: 'footer' }, outerHtml);
     let result = `
     <!doctype html>
     <html>
