@@ -1,15 +1,17 @@
 const { getBuildContext } = require('../../buildContext');
-const { renderHtmlItems } = require('./helpers');
+const { renderHtmlItems, wrapHeaderFooter } = require('./helpers');
 const htmlPretty = require('pretty');
 
-module.exports = async function webpagePageOutput({ items, filepath, pretty, key }) {
+module.exports = async function webpagePageOutput({ items, href, title, footer, pretty, key }) {
     const context = getBuildContext(key);
-    const htmlItems = await renderHtmlItems(items);
+    const innerHtml = await renderHtmlItems(items);
+    const outerHtml = `<div id="content">${innerHtml}</div>`;
+    const htmlItems = wrapHeaderFooter({ footer, tag: 'footer' }, outerHtml);
     let result = `
     <!doctype html>
     <html>
     <head>
-    <title>something</title>
+    <title>${title || href} - ${context.project.title || 'CHOMP'}</title>
     ${context.getFiles('stylesheet').map(i => `<link rel="stylesheet" href="${i.filepath}" />`).join('\n')}
     </head>
     <body>
@@ -18,8 +20,8 @@ module.exports = async function webpagePageOutput({ items, filepath, pretty, key
     </body>
     </html>
     `;
-    if (pretty !== 'no') {
+    if (pretty !== 'false' && pretty !== false) {
         result = htmlPretty(result.split('\n').map(i => i.trimStart()).join(''));
     }
-    context.addFile(`${filepath}.html`, result);
+    context.addFile(`${href}.html`, result);
 }

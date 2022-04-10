@@ -38,9 +38,19 @@ class BuildContext {
                 return;
             }
             this.modules[mod.name] = true;
-            logging.log(`Adding module ${mod.name}`);
         }
         return mod(this);
+    }
+
+    /**
+     * Sets the specified theme to the current build.
+     * @param {*} theme The theme object to set.
+     */
+     setTheme(theme) {
+        if (!theme || !_.isFunction(theme)) {
+            throw new Error('Expected a theme function.');
+        }
+        return theme(this);
     }
 
     /**

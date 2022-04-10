@@ -1,4 +1,3 @@
-const htmlFormatter = require('../../formatters/html');
 const { getBuildContext } = require('../../buildContext');
 const { bootstrap } = require('../../modules/webpage');
 const { renderHtmlItems, wrapHeaderFooter } = require('./helpers');

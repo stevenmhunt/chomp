@@ -6,6 +6,10 @@ document.querySelectorAll('.chomp-wizard').forEach(function (e) {
         return e.querySelectorAll('.chomp-wizard-item').length;
     }
 
+    function getHomeButton() {
+        return e.querySelector('.chomp-wizard-home');
+    }
+
     function getBackButton() {
         return e.querySelector('.chomp-wizard-back');
     }
@@ -26,6 +30,7 @@ document.querySelectorAll('.chomp-wizard').forEach(function (e) {
 
         getBackButton().disabled = value === 0 ? 'disabled' : undefined;
         getNextButton().disabled = value === itemCount - 1 ? 'disabled' : undefined;
+        e.querySelector('.chomp-wizard-status').innerHTML = 'Page ' + (value + 1) + ' of ' + itemCount;
     }
 
     function getSelectedIndex() {
@@ -45,7 +50,12 @@ document.querySelectorAll('.chomp-wizard').forEach(function (e) {
         setSelectedIndex(index - 1);
     }
 
+    function home() {
+        setSelectedIndex(0);
+    }
+
     getBackButton().addEventListener('click', back);
+    getHomeButton().addEventListener('click', home);
     getNextButton().addEventListener('click', next);
     getSelectedIndex();
 });

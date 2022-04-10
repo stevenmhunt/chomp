@@ -1,6 +1,6 @@
 const path = require('path');
 const { getBuildContext } = require('../../buildContext');
-const { bootstrap } = require('../../modules/webpage');
+const { bootstrap, fontAwesome } = require('../../modules/webpage');
 const { renderHtmlItems, wrapHeaderFooter } = require('./helpers');
 
 module.exports = async function webpageWizardOutput({ items, header, footer, key }) {
@@ -8,6 +8,7 @@ module.exports = async function webpageWizardOutput({ items, header, footer, key
 
     // configure prerequisites:
     context.addModule(bootstrap);
+    context.addModule(fontAwesome);
     context.addFile('./js/chomp-wizard.js', `filepath:${path.join(__dirname, './public/chomp-wizard.js')}`, 'script');
     context.addFile('./js/chomp-wizard.css', `filepath:${path.join(__dirname, './public/chomp-wizard.css')}`, 'stylesheet');
 
@@ -18,8 +19,10 @@ module.exports = async function webpageWizardOutput({ items, header, footer, key
     <div class="chomp-wizard col">
         ${htmlItems}
         <div class="chomp-wizard-footer">
-            <button class="btn btn-primary chomp-wizard-back">Back</button>
-            <button class="btn btn-primary chomp-wizard-next">Next</button>
+            <button class="btn btn-lg btn-primary chomp-wizard-back"><i class="fa-solid fa-chevron-left"></i>&nbsp;Back</button>
+            <button class="btn btn-lg btn-success chomp-wizard-home"><i class="fa-solid fa-house"></i>&nbsp;Home</button>
+            <div class="chomp-wizard-status"></div>
+            <button class="btn btn-lg btn-primary chomp-wizard-next">Next&nbsp;<i class="fa-solid fa-chevron-right"></i></button>
         </div>
     </div>`);
     return `<div class="col-lg-8 col-md-8 col-sm-8 container justify-content-center">${innerHtml}</div>`;
