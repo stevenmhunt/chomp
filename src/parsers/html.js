@@ -6,16 +6,25 @@ function getNodeType(node) {
     return nodeNameMapping[node.nodeName] || node.nodeName;
 }
 
+function extractAttributes(node) {
+    const result = {};
+    ((node || {}).attrs || []).forEach(({ name, value }) => {
+        result[name] = value;
+    });
+    return result;
+}
+
 function toJSON(node) {
     if (!node) { return undefined; }
     if (_.isArray(node)) {
         return node.map(toJSON);
     }
     return {
-        type: getNodeType(node),
+        nodeType: getNodeType(node),
         value: node.value,
+        ...extractAttributes(node),
         items: toJSON(node.childNodes)
-    }
+    };
 }
 
 module.exports = async function htmlParser(content, options) {
@@ -25,7 +34,7 @@ module.exports = async function htmlParser(content, options) {
     if (_.isArray(data)) {
         if (data.length === 1) { return data[0]; }
         return {
-            type: 'div',
+            nodeType: 'div',
             items: data
         };
     }

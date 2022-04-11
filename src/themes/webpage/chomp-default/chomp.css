@@ -8,6 +8,29 @@ body {
     flex-direction: column;
 }
 
+@media screen and (max-width: 600px) {
+    table {width:100%;}
+    thead {display: none;}
+    tr:nth-of-type(2n) {background-color: inherit;}
+    tr td:first-child {background: #f0f0f0; font-weight:bold;font-size:1.3em;}
+    tbody td {display: block;  text-align:center;}
+    tbody td:before { 
+        content: attr(data-th); 
+        display: block;
+        text-align:center;
+    }
+}
+
+table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+ul {
+    display: inline-block;
+    text-align: left;
+}
+
 #content {
     flex: 1 0 auto;
 }
@@ -23,6 +46,24 @@ footer {
 
 section > * {
     padding: 10px;
+    text-align: center;
+}
+
+section.chomp-inline > div {
+    max-width: 350px;
+    text-align: center;
+}
+
+section.chomp-inline img, section.chomp-inline video {
+    max-width: 200px;
+}
+
+table img, table video {
+    max-width: 300px;
+}
+
+img, video {
+    max-width: 500px;
 }
 
 h1, h2, h3, h4 {
@@ -30,6 +71,3 @@ h1, h2, h3, h4 {
     margin-bottom : 40px !important;
 }
 
-p.bodytext {
-    text-align: left;
-}

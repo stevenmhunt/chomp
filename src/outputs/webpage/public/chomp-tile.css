@@ -8,9 +8,10 @@
     border-radius: 15px;
     text-decoration: none;
     vertical-align: middle;
-    color: white;
+    color: #333333;
     text-align: center;
-    font-size: 1.5em;
+    font-size: 1.2em;
+    font-weight: bold;
     background-position-x: 50%;
     background-position-y: 50%;
     background-size: cover;

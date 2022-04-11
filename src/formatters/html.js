@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const he = require('he');
 
 /**
  * Given a data object, converts it to HTML output.
@@ -7,8 +8,11 @@ const _ = require('lodash');
  */
 async function renderTag(obj) {
     const items = (await Promise.all((obj.items || []).map(i => renderTag(i)))).join('');
-    if (obj.type === 'text') { return obj.value; }
-    return `<${obj.type}>${items}</${obj.type}>`;
+    if (obj.nodeType === 'text') { return obj.value; }
+    const attrs = _.keys(obj)
+        .filter(key => key !== 'nodeType' && key !== 'items' && obj[key])
+        .map((key) => `${key}="${he.encode(obj[key].toString(), { 'isAttributeValue': true })}"`).join(' ');
+    return `<${obj.nodeType}${attrs ? ' ' + attrs : ''}>${items}</${obj.nodeType}>`;
 }
 
 /**

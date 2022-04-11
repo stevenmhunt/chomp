@@ -27,12 +27,12 @@ function processXmlNode(obj) {
     return {
         ...obj.$,
         text: obj._,
-        type: obj['#name'],
+        nodeType: obj['#name'],
         header: (obj.header || []).join(''),
         footer: (obj.footer || []).join(''),
         items: [
             ...(obj.$$ || []).filter(o => excludedNodes.indexOf(o['#name']) === -1).map(o => processXmlNode(o)),
-            ...(obj._ ? [{ type: 'text', value: obj._ }] : [])
+            ...(obj._ ? [{ nodeType: 'text', value: obj._ }] : [])
         ]
     };
 }

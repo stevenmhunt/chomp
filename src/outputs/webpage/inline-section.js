@@ -10,5 +10,5 @@ module.exports = async function webpageInlineSectionOutput({ items, header, foot
 
     // render data
     const htmlItems = await renderHtmlItems(items);
-    return wrapHeaderFooter({ header, footer }, `<section class="d-flex justify-content-around">${htmlItems}</section>`);
+    return wrapHeaderFooter({ header, footer }, `<section class="chomp-inline d-flex justify-content-around">${htmlItems}</section>`);
 };

@@ -17,15 +17,15 @@ function getItems(obj) {
 }
 
 function getObjectType(type, obj) {
-    const name = _.camelCase(obj.type || '');
+    const name = _.camelCase(obj.nodeType || '');
     if (_.isFunction(outputs[type][name])) { return 'output'; }
     if (_.isFunction(inputs[name])) { return 'input'; }
-    throw new Error(`Invalid input/output type ${obj.type}.`);
+    throw new Error(`Invalid input/output type ${obj.nodeType}.`);
 }
 
 async function executeBuildInternal(key, type, obj) {
     const objectType = getObjectType(type, obj);
-    const name = _.camelCase(obj.type);
+    const name = _.camelCase(obj.nodeType);
     if (objectType === 'output') {
         const items = _.flatten(await Promise.all(getItems(obj).map(i => executeBuildInternal(key, type, i))));
         return outputs[type][name]({
@@ -35,7 +35,10 @@ async function executeBuildInternal(key, type, obj) {
         });
     }
     else if (objectType === 'input') {
-        return await inputs[name](obj);
+        return await inputs[name]({
+            ...obj,
+            key
+        });
     }
     else {
         throw new Error('Unknown object type!');
