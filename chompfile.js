@@ -44,9 +44,7 @@ async function readXML(filepath) {
     if (!nodes.project) {
         throw new Error('XML error: expected root node to be <project>...</project>');
     }
-    const result = processXmlNode(nodes.project);
-    await fs.writeJSON('./output.json', nodes);
-    return result;
+    return processXmlNode(nodes.project);
 }
 
 module.exports = {
